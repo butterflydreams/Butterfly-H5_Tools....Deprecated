@@ -9,20 +9,41 @@
   height: 100%;
   min-height: 100vh;
   background-color: #ffffff;
-  .pnl-serverdecode {
+  .ui-serverdecode {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    .txt-tips {
+      position: absolute;
+      margin: auto;
+      top: 40%;
+      right: 0;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      line-height: 0.8rem;
+      letter-spacing: 0;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-align: center;
+      color: #000000;
+    }
   }
-  .pnl-localreader {
+  .ui-localreader {
   }
-  .pnl-camerascan {
+  .ui-camerascan {
   }
 }
 </style>
 
 <template>
   <section class="qrscanner">
-    <div class="pnl-serverdecode" v-if="type == ETYPE.eServerDecode"></div>
-    <div class="pnl-localreader" v-else-if="type == ETYPE.eLocalReader"></div>
-    <div class="pnl-camerascan" v-else></div>
+    <div class="ui-serverdecode" v-if="type == ETYPE.eServerDecode">
+      <div class="txt-tips">Sorry, your device is unsupport yet.</div>
+    </div>
+    <div class="ui-localreader" v-else-if="type == ETYPE.eLocalReader"></div>
+    <div class="ui-camerascan" v-else></div>
   </section>
 </template>
 
