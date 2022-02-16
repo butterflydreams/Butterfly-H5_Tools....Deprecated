@@ -9,11 +9,21 @@
   height: 100%;
   min-height: 100vh;
   background-color: #ffffff;
+  .pnl-serverdecode {
+  }
+  .pnl-localreader {
+  }
+  .pnl-camerascan {
+  }
 }
 </style>
 
 <template>
-  <section class="qrscanner"></section>
+  <section class="qrscanner">
+    <div class="pnl-serverdecode" v-if="type == ETYPE.eServerDecode"></div>
+    <div class="pnl-localreader" v-else-if="type == ETYPE.eLocalReader"></div>
+    <div class="pnl-camerascan" v-else></div>
+  </section>
 </template>
 
 <script>
@@ -33,6 +43,14 @@ export default {
   created() {
     document.title = "QR Code Scanner";
     this.type = Versions.Compare(this.iOSVersion, "14.0", ">=") == true || Versions.Compare(this.iPadOSVersion, "14.0", ">=") == true ? ETYPE.eCameraScan : ETYPE.eLocalReader;
+  },
+  computed: {
+    ETYPE: {
+      get() {
+        return ETYPE;
+      },
+      set() {}
+    }
   },
   methods: {}
 };
