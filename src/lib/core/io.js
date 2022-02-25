@@ -19,9 +19,4 @@ File.Parse = function (name) {
   return data;
 };
 
-File.Type = {};
-File.Type.IsImage = function (type) {
-  return ["jpg", "jpeg", "png"].indexOf(type.toLowerCase()) != -1;
-};
-
 export { Path, File };

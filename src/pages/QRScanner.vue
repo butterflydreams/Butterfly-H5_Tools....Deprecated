@@ -120,7 +120,7 @@
               margin: 0.24rem auto;
               padding: 0 0.4rem;
               width: 100%;
-              height: 0.64rem;
+              max-height: 0.64rem;
               line-height: 0.32rem;
               letter-spacing: 0;
               font-size: 0.3rem;
@@ -399,6 +399,7 @@ const ETYPE = {
   eServerDecode: 2 //Upload image to sever decode: old device or system, unsupport yet.
 };
 import { Versions } from "@lib/util/compare.js";
+import { Image } from "@lib/util/images.js";
 import { File } from "@lib/core/io.js";
 import { BrowserMultiFormatReader } from "@zxing/library";
 import { BrowserQRCodeReader } from "@zxing/browser";
@@ -412,7 +413,8 @@ export default {
       extension: "",
       progress: 0,
       message: "",
-      scanner: null
+      scanner: null,
+      result: ""
     };
   },
   created() {
@@ -430,10 +432,11 @@ export default {
           if (devices.length > 0) {
             this.scanner
               .decodeFromInputVideoDeviceContinuously(0, "video", (result) => {
-                if (!!result && !!result.text) {
+                if (!!result && !!result.text && this.result != result.text) {
+                  this.result = result.text;
                   this.$alert.present({
                     title: "Success",
-                    message: result.text,
+                    message: this.result,
                     actions: [
                       {
                         name: "Cancel",
@@ -446,7 +449,7 @@ export default {
                         style: "font-weight: 500; color: #ff0000",
                         callback: (id) => {
                           this.$alert.dismiss(id);
-                          window.location.href = result.text;
+                          window.location.href = this.result;
                         }
                       }
                     ]
@@ -456,16 +459,8 @@ export default {
               .catch(() => {
                 this.$alert.present({
                   title: "<span style='color: #ff0000'>Error</span>",
-                  message: "No camera found!",
-                  actions: [
-                    {
-                      name: "Quit",
-                      callback: (id) => {
-                        this.$alert.dismiss(id);
-                        this.$router.go(-1);
-                      }
-                    }
-                  ]
+                  message: "Please aim camera at QRCode!",
+                  actions: [{ name: "OK" }]
                 });
               });
           } else {
@@ -523,24 +518,26 @@ export default {
           if (!!preview) {
             preview.src = reader.result;
             preview.onload = function () {
-              let time = Math.floor(Math.random() * (30 - 5)) + 5;
+              let image = Image.Resize(preview, 200, 200, _this.extension);
+              let time = Math.floor(Math.random() * (20 - 5)) + 5;
               let itimer = setInterval(() => {
                 _this.progress += 0.01;
                 if (_this.progress >= 1) {
                   _this.progress = 1;
                   clearInterval(itimer);
-                  if (!!reader.result) {
+                  if (!!image) {
                     if (_this.scanner == null) {
                       _this.scanner = new BrowserQRCodeReader();
                     }
                     _this.scanner
-                      .decodeFromImageUrl(reader.result)
-                      .then((data) => {
+                      .decodeFromImageUrl(image)
+                      .then((result) => {
                         _this.stage = 2;
-                        _this.message = data.text;
+                        _this.result = result.text;
+                        _this.message = _this.result;
                         let ttimer = setTimeout(() => {
                           clearInterval(ttimer);
-                          window.location.href = data.text;
+                          window.location.href = _this.result;
                         }, 1000);
                       })
                       .catch(() => {
