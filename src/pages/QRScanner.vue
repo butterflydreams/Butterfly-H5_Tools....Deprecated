@@ -30,6 +30,22 @@
       color: #000000;
     }
   }
+  .ui-camerascan {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    .vdo-scanner {
+      display: block;
+      position: absolute;
+      margin: auto;
+      top: 42%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+  }
   .ui-localreader {
     position: relative;
     margin: 0 auto;
@@ -92,10 +108,20 @@
               width: 3rem;
             }
             .txt-messages {
+              overflow: hidden;
+              display: -webkit-box;
+              /* autoprefixer: off */
+              -moz-box-orient: vertical;
+              -webkit-box-orient: vertical;
+              /* autoprefixer: on */
+              -webkit-line-clamp: 2;
+              word-break: break-all;
               position: relative;
               margin: 0.24rem auto;
+              padding: 0 0.4rem;
               width: 100%;
-              line-height: 0.28rem;
+              height: 0.64rem;
+              line-height: 0.32rem;
               letter-spacing: 0;
               font-size: 0.3rem;
               font-weight: 600;
@@ -249,8 +275,6 @@
       }
     }
   }
-  .ui-camerascan {
-  }
 }
 </style>
 
@@ -259,7 +283,10 @@
     <div class="ui-serverdecode" v-if="type == ETYPE.eServerDecode">
       <div class="txt-tips">Sorry, your device is unsupport yet.</div>
     </div>
-    <div class="ui-localreader" v-else-if="type == ETYPE.eLocalReader">
+    <div class="ui-camerascan" v-else-if="type == ETYPE.eCameraScan">
+      <video class="vdo-scanner" id="video"></video>
+    </div>
+    <div class="ui-localreader" v-else>
       <div class="wrapper">
         <a class="actions" href="javascript:;" @click="OnCloseClick()">
           <div class="action" style="background-color: #ef1910"></div>
@@ -269,7 +296,7 @@
         <div class="panels">
           <div class="pnl-uploadeds" :style="`background-color: ${stage == 2 ? '#0fbc00' : '#ff2028'}`" v-if="stage >= 2">
             <div class="uploaded">
-              <div class="marks">
+              <div class="marks" :style="`left: ${stage == 2 ? '0.2rem' : '0'}`">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 170 156" v-if="stage == 2">
                   <path
                     fill="#ffffff"
@@ -301,7 +328,7 @@
                   />
                 </svg>
               </div>
-              <div class="txt-messages">{{ MESSAGES }}</div>
+              <div class="txt-messages">{{ message }}</div>
             </div>
           </div>
           <div class="pnl-uploadings" v-else-if="stage == 1">
@@ -362,69 +389,122 @@
         </div>
       </div>
     </div>
-    <div class="ui-camerascan" v-else></div>
   </section>
 </template>
 
 <script>
 const ETYPE = {
-  eCameraScan: 0, //Use camera to scan: default or iOS | iPadOS >= 14.0.
-  eLocalReader: 1, //Decode local image : iOS | iPadOS < 14.0 or all android.
+  eLocalReader: 0, //Decode local image : iOS | iPadOS < 14.0 or all android.
+  eCameraScan: 1, //Use camera to scan: default or iOS | iPadOS >= 14.0.
   eServerDecode: 2 //Upload image to sever decode: old device or system, unsupport yet.
-};
-const ECODE = {
-  eUnknow: 0,
-  eSuccess: 100,
-  eFail_FileInvalid: 200,
-  eFail_FileError: 201,
-  eFail_ImageInvalid: 202,
-  eFail_ImageError: 203
 };
 import { Versions } from "@lib/util/compare.js";
 import { File } from "@lib/core/io.js";
+import { BrowserMultiFormatReader } from "@zxing/library";
 import { BrowserQRCodeReader } from "@zxing/browser";
 export default {
   name: "QRScanner",
   data() {
     return {
-      type: ETYPE.eCameraScan,
+      type: ETYPE.eLocalReader,
       stage: 0, //ui stage: 0-upload; 1-uploading; 2-uploaded success; 3-uploaded fail.
       file: "",
       extension: "",
       progress: 0,
-      code: ECODE.eUnknow
+      message: "",
+      scanner: null
     };
   },
   created() {
     document.title = "QR Code Scanner";
     this.type = Versions.Compare(this.iOSVersion, "14.0", ">=") == true || Versions.Compare(this.iPadOSVersion, "14.0", ">=") == true ? ETYPE.eCameraScan : ETYPE.eLocalReader;
   },
+  mounted() {
+    if (this.type == ETYPE.eCameraScan) {
+      if (this.scanner == null) {
+        this.scanner = new BrowserMultiFormatReader();
+      }
+      this.scanner
+        .listVideoInputDevices()
+        .then((devices) => {
+          if (devices.length > 0) {
+            this.scanner
+              .decodeFromInputVideoDeviceContinuously(0, "video", (result) => {
+                if (!!result && !!result.text) {
+                  this.$alert.present({
+                    title: "Success",
+                    message: result.text,
+                    actions: [
+                      {
+                        name: "Cancel",
+                        callback: (id) => {
+                          this.$alert.dismiss(id);
+                        }
+                      },
+                      {
+                        name: "To Website",
+                        style: "font-weight: 500; color: #ff0000",
+                        callback: (id) => {
+                          this.$alert.dismiss(id);
+                          window.location.href = result.text;
+                        }
+                      }
+                    ]
+                  });
+                }
+              })
+              .catch(() => {
+                this.$alert.present({
+                  title: "<span style='color: #ff0000'>Error</span>",
+                  message: "No camera found!",
+                  actions: [
+                    {
+                      name: "Quit",
+                      callback: (id) => {
+                        this.$alert.dismiss(id);
+                        this.$router.go(-1);
+                      }
+                    }
+                  ]
+                });
+              });
+          } else {
+            this.$alert.present({
+              title: "<span style='color: #ff0000'>Error</span>",
+              message: "No camera found!",
+              actions: [
+                {
+                  name: "Quit",
+                  callback: (id) => {
+                    this.$alert.dismiss(id);
+                    this.$router.go(-1);
+                  }
+                }
+              ]
+            });
+          }
+        })
+        .catch(() => {
+          this.$alert.present({
+            title: "<span style='color: #ff0000'>Error</span>",
+            message: "Your device is unsupport yet.",
+            actions: [
+              {
+                name: "Quit",
+                callback: (id) => {
+                  this.$alert.dismiss(id);
+                  this.$router.go(-1);
+                }
+              }
+            ]
+          });
+        });
+    }
+  },
   computed: {
     ETYPE: {
       get() {
         return ETYPE;
-      },
-      set() {}
-    },
-    MESSAGES: {
-      get() {
-        switch (this.code) {
-          default:
-          case ECODE.eUnknow:
-            return "";
-          case ECODE.eSuccess:
-            return "Success";
-          case ECODE.eFail_FileInvalid:
-            return ">> Invalid File! <<";
-          case ECODE.eFail_FileError:
-            return ">> File Error! <<";
-          case ECODE.eFail_ImageInvalid:
-            return ">> Invalid Image! <<";
-          case ECODE.eFail_ImageError:
-            return ">> Image Error! <<";
-          case ECODE.eFail_DecodeFail:
-            return "";
-        }
       },
       set() {}
     }
@@ -444,96 +524,61 @@ export default {
             preview.src = reader.result;
             preview.onload = function () {
               let time = Math.floor(Math.random() * (30 - 5)) + 5;
-              let timer = setInterval(() => {
+              let itimer = setInterval(() => {
                 _this.progress += 0.01;
                 if (_this.progress >= 1) {
                   _this.progress = 1;
-                  clearInterval(timer);
-                  _this.stage = 2;
-                  _this.code = ECODE.eSuccess;
-                  _this.OnUploadCallback(_this.code, reader.result);
+                  clearInterval(itimer);
+                  if (!!reader.result) {
+                    if (_this.scanner == null) {
+                      _this.scanner = new BrowserQRCodeReader();
+                    }
+                    _this.scanner
+                      .decodeFromImageUrl(reader.result)
+                      .then((data) => {
+                        _this.stage = 2;
+                        _this.message = data.text;
+                        let ttimer = setTimeout(() => {
+                          clearInterval(ttimer);
+                          window.location.href = data.text;
+                        }, 1000);
+                      })
+                      .catch(() => {
+                        _this.stage = 3;
+                        _this.message = "Image decode error!";
+                      });
+                  } else {
+                    _this.stage = 3;
+                    _this.message = "Null image!";
+                  }
                 }
               }, time);
             };
             preview.onerror = function () {
               _this.stage = 3;
-              _this.code = ECODE.eFail_ImageInvalid;
-              _this.OnUploadCallback(_this.code);
+              _this.message = "Invalid image!";
             };
           } else {
             _this.stage = 3;
-            _this.code = ECODE.eFail_ImageError;
-            _this.OnUploadCallback(_this.code);
+            _this.message = "Image error!";
           }
         });
       };
       reader.onerror = function () {
         _this.stage = 3;
-        _this.code = ECODE.eFail_FileError;
-        _this.OnUploadCallback(_this.code);
+        _this.message = "File error!";
       };
       if (!!file) {
         reader.readAsDataURL(file);
       } else {
         this.stage = 3;
-        this.code = ECODE.eFail_FileInvalid;
-        this.OnUploadCallback(this.code);
-      }
-    },
-    OnUploadCallback(_, result) {
-      if (!!result) {
-        let scanner = new BrowserQRCodeReader();
-        if (!!scanner) {
-          scanner
-            .decodeFromImageUrl(result)
-            .then((data) => {
-              this.$alert.present({
-                title: this.MESSAGES,
-                message: data.text,
-                actions: [
-                  {
-                    name: "Cancel",
-                    callback: (id) => {
-                      this.$alert.dismiss(id);
-                    }
-                  },
-                  {
-                    name: "To Website",
-                    style: "font-weight: 500; color: #ff0000",
-                    callback: (id) => {
-                      this.$alert.dismiss(id);
-                      window.location.href = data.text;
-                    }
-                  }
-                ]
-              });
-            })
-            .catch(() => {
-              this.stage = 3;
-              this.code = ECODE.eFail_DecodeFail;
-              this.$alert.present({
-                title: "<span style='color: #ff0000'>Fail</span>",
-                message: "Image Decode Error!",
-                actions: [
-                  {
-                    name: "OK",
-                    callback: (id) => {
-                      this.$alert.dismiss(id);
-                      this.stage = 0;
-                      this.code = ECODE.eUnknow;
-                    }
-                  }
-                ]
-              });
-            });
-        }
+        this.message = "Invalid file!";
       }
     },
     OnDeleteClick() {
       this.file = "";
       this.extension = "";
       this.stage = 0;
-      this.code = ECODE.eUnknow;
     },
     OnCloseClick() {
       this.$router.go(-1);
