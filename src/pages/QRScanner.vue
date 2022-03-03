@@ -8,7 +8,7 @@
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #cccccc;
   .ui-serverdecode {
     position: relative;
     margin: 0 auto;
@@ -51,7 +51,7 @@
     margin: 0 auto;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: #cccccc;
     .wrapper {
       overflow: hidden;
       position: absolute;
