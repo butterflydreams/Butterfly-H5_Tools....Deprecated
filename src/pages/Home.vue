@@ -12,93 +12,98 @@
   background-image: url("~@/assets/common/img_wallpaper.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  .list-pages {
+  .pages {
     position: relative;
     margin: 0 auto;
     width: 100%;
-    .item-page {
+    .list-pages {
       position: relative;
       margin: 0 auto;
       width: 100%;
-      height: calc(~"100vh - 0.3rem  - 0.16rem - 1.88rem - 0.58rem");
-      .list-apps {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-wrap: wrap;
+      .item-page {
         position: relative;
         margin: 0 auto;
-        padding: 0 0.27rem;
         width: 100%;
-        .item-app {
-          display: block;
+        height: calc(~"100vh - 0.3rem  - 0.16rem - 1.88rem - 0.58rem");
+        .list-apps {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-wrap: wrap;
           position: relative;
-          margin: 0;
-          width: 1.74rem;
-          height: 1.76rem;
-          .img-icon {
+          margin: 0 auto;
+          padding: 0 0.27rem;
+          width: 100%;
+          .item-app {
             display: block;
             position: relative;
-            margin: 0 auto;
-            width: 1.2rem;
-            height: 1.2rem;
-            border-radius: 0.3rem;
-          }
-          .txt-name {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            height: 0.5rem;
-            line-height: 0.5rem;
-            letter-spacing: 0;
-            font-size: 0.26rem;
-            font-weight: 500;
-            text-align: center;
-            text-overflow: ellipsis;
-            color: #ffffff;
+            margin: 0;
+            width: 1.74rem;
+            height: 1.76rem;
+            .img-icon {
+              display: block;
+              position: relative;
+              margin: 0 auto;
+              width: 1.2rem;
+              height: 1.2rem;
+              border-radius: 0.3rem;
+            }
+            .txt-name {
+              overflow: hidden;
+              white-space: nowrap;
+              position: relative;
+              margin: 0 auto;
+              width: 100%;
+              height: 0.5rem;
+              line-height: 0.5rem;
+              letter-spacing: 0;
+              font-size: 0.26rem;
+              font-weight: 500;
+              text-align: center;
+              text-overflow: ellipsis;
+              color: #ffffff;
+            }
           }
         }
       }
-    }
-    .paginations {
-      position: relative;
-      margin: 0 auto;
-      bottom: 0;
-      left: auto;
-      right: auto;
-      width: fit-content;
-      height: 0.58rem;
-      :deep(.swiper-pagination-bullet) {
+      .paginations {
         position: relative;
-        margin: 0;
-        width: 0.32rem;
-        height: 100%;
-        background-color: transparent;
-        opacity: 0.4;
-        cursor: auto;
-        &.swiper-pagination-bullet-active {
-          opacity: 1;
-          outline: none;
-        }
-        .pagination {
-          display: inline-block;
-          position: absolute;
-          margin: auto;
-          top: 0.08rem;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          width: 0.16rem;
-          height: 0.16rem;
-          border-radius: 50%;
-          background-color: #ffffff;
+        margin: 0 auto;
+        bottom: 0;
+        left: auto;
+        right: auto;
+        width: fit-content;
+        height: 0.58rem;
+        :deep(.swiper-pagination-bullet) {
+          position: relative;
+          margin: 0;
+          width: 0.32rem;
+          height: 100%;
+          background-color: transparent;
+          opacity: 0.4;
+          cursor: auto;
+          &.swiper-pagination-bullet-active {
+            opacity: 1;
+            outline: none;
+          }
+          .pagination {
+            display: inline-block;
+            position: absolute;
+            margin: auto;
+            top: 0.08rem;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 0.16rem;
+            height: 0.16rem;
+            border-radius: 50%;
+            background-color: #ffffff;
+          }
         }
       }
     }
   }
-  .dock {
+  .docks {
     overflow: hidden;
     position: relative;
     margin: 0 auto;
@@ -138,20 +143,22 @@
 
 <template>
   <section class="home">
-    <div class="swiper list-pages pswiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide item-page" v-for="(pitem, pindex) in pageList" :key="pindex">
-          <div class="list-apps">
-            <a class="item-app" href="javascript:;" @click="OnAppClick(aitem.route)" v-for="(aitem, aindex) in pitem.appList" :key="aindex">
-              <img class="img-icon" :src="require(`@assets/apps/${aitem.icon}.png`)" />
-              <div class="txt-name">{{ aitem.name }}</div>
-            </a>
+    <div class="pages">
+      <div class="swiper list-pages pswiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide item-page" v-for="(pitem, pindex) in pageList" :key="pindex">
+            <div class="list-apps">
+              <a class="item-app" href="javascript:;" @click="OnAppClick(aitem.route)" v-for="(aitem, aindex) in pitem.appList" :key="aindex">
+                <img class="img-icon" :src="require(`@assets/apps/${aitem.icon}.png`)" />
+                <div class="txt-name">{{ aitem.name }}</div>
+              </a>
+            </div>
           </div>
         </div>
+        <div class="paginations"></div>
       </div>
-      <div class="paginations"></div>
     </div>
-    <div class="dock">
+    <div class="docks">
       <div class="list-apps">
         <a class="item-app" href="javascript:;" @click="OnAppClick()" v-for="index in 4" :key="index">
           <img class="img-icon" :src="require('@assets/apps/ico_system.png')" />
