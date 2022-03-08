@@ -43,7 +43,7 @@
       line-height: 0.32rem;
       letter-spacing: 0;
       font-size: 0.24rem;
-      font-weight: normal;
+      font-weight: 400;
       text-align: center;
       color: #747474;
     }
@@ -56,9 +56,7 @@
     <div class="wrapper">
       <div class="txt-title">404</div>
       <div class="txt-subtitle">Oops! Page not found.</div>
-      <div class="txt-content">
-        This page no longer exists or was moved to another location.
-      </div>
+      <div class="txt-content">This page no longer exists or was moved to another location.</div>
     </div>
   </section>
 </template>
