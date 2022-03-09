@@ -110,10 +110,8 @@
             .txt-messages {
               overflow: hidden;
               display: -webkit-box;
-              /* autoprefixer: off */
               -moz-box-orient: vertical;
               -webkit-box-orient: vertical;
-              /* autoprefixer: on */
               -webkit-line-clamp: 2;
               word-break: break-all;
               position: relative;
