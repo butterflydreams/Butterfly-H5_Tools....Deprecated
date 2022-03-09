@@ -200,6 +200,11 @@ export default {
               route: "QRGenerator"
             },
             {
+              name: "LAN Drop",
+              icon: "ico_landrop",
+              route: "LANDrop"
+            },
+            {
               name: "Test",
               icon: "ico_test",
               route: "Test"

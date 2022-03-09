@@ -25,6 +25,11 @@ const routes = [
     path: "/qrgenerator",
     name: "QRGenerator",
     component: () => import("@/pages/QRGenerator.vue")
+  },
+  {
+    path: "/landrop",
+    name: "LANDrop",
+    component: () => import("@/pages/LANDrop.vue")
   }
 ];
 
