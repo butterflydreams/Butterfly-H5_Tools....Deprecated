@@ -1,7 +1,8 @@
+const VueCLI = require("@vue/cli-service");
 const Path = require("path");
-const vConsolePlugin = require("vconsole-webpack-plugin");
 
-module.exports = {
+module.exports = VueCLI.defineConfig({
+  transpileDependencies: true,
   lintOnSave: true,
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   chainWebpack: (config) => {
@@ -20,15 +21,7 @@ module.exports = {
       .set("@ui", Path.join(__dirname, "src/ui"));
   },
   configureWebpack: (config) => {
-    config.plugins = [
-      ...config.plugins,
-      ...[
-        new vConsolePlugin({
-          filter: [],
-          enable: true
-        })
-      ]
-    ];
+    config.plugins = [...config.plugins, ...[]];
   },
   devServer: {
     host: "0.0.0.0",
@@ -36,4 +29,4 @@ module.exports = {
     open: true,
     hot: true
   }
-};
+});

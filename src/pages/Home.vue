@@ -169,8 +169,8 @@
 </template>
 
 <script>
-import Swiper from "swiper/swiper-bundle.esm.js";
-import "swiper/swiper-bundle.css";
+import Swiper from "swiper";
+import "swiper/css";
 export default {
   name: "Home",
   data() {
@@ -182,32 +182,44 @@ export default {
             {
               name: "iOS 15",
               icon: "ico_system",
-              route: "System"
+              route: {
+                name: "System"
+              }
             },
             {
               name: "Settings",
               icon: "ico_settings",
-              route: "Settings"
+              route: {
+                name: "Settings"
+              }
             },
             {
               name: "QR Scanner",
               icon: "ico_qrscanner",
-              route: "QRScanner"
+              route: {
+                name: "QRScanner"
+              }
             },
             {
               name: "QR Generator",
               icon: "ico_qrgenerator",
-              route: "QRGenerator"
+              route: {
+                name: "QRGenerator"
+              }
             },
             {
               name: "LAN Drop",
               icon: "ico_landrop",
-              route: "LANDrop"
+              route: {
+                name: "LANDrop"
+              }
             },
             {
               name: "Test",
               icon: "ico_test",
-              route: "Test"
+              route: {
+                name: "Test"
+              }
             }
           ]
         },
@@ -242,7 +254,7 @@ export default {
   },
   methods: {
     OnAppClick(route) {
-      if (route == "Test") {
+      if (route.name == "Test") {
         this.$alert.present({
           title: "Tips",
           message: "This tool is not available, coming soon...",
@@ -262,9 +274,9 @@ export default {
             }
           ]
         });
-      } else if (route == "System") {
+      } else if (route.name == "System") {
         this.$toast.present({ message: "Hi, are you OK?", duration: 3000 });
-      } else if (route == "Settings") {
+      } else if (route.name == "Settings") {
         this.$alert.present({
           title: "<span style='color: #ff0000'>Error</span>",
           message: "Oops! Something is wrong...",
@@ -275,7 +287,7 @@ export default {
           ]
         });
       } else {
-        this.$router.push({ name: route });
+        this.$router.push(route);
       }
     }
   }

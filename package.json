@@ -2,7 +2,7 @@
   "name": "tools",
   "version": "0.1.0",
   "private": true,
-  "description": "Some html5 wap tools for compilation, such as QR code creator[QRCreator], QR code scanner[QRScanner], etc...",
+  "description": "wap tools for compilation, such as QR code creator[QRCreator], QR code scanner[QRScanner], etc...",
   "scripts": {
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
@@ -10,26 +10,27 @@
     "build:cmd": "vue-cli-service build && node build.cmd.js"
   },
   "dependencies": {
-    "@zxing/browser": "0.0.10",
+    "@zxing/browser": "^0.1.1",
     "@zxing/library": "^0.19.1",
-    "core-js": "^3.6.5",
-    "swiper": "^7.3.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "core-js": "^3.8.3",
+    "swiper": "^8.0.7",
+    "vconsole": "^3.12.1",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "prettier": "^2.2.1",
-    "vconsole-webpack-plugin": "^1.7.3"
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.2.31",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
+    "prettier": "^2.5.1"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ]
 }

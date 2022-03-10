@@ -393,8 +393,8 @@
 import { File } from "@lib/core/io.js";
 import { EncodeHintType } from "@zxing/library";
 import { BrowserQRCodeSvgWriter } from "@zxing/browser";
-import Swiper from "swiper/swiper-bundle.esm.js";
-import "swiper/swiper-bundle.css";
+import Swiper from "swiper";
+import "swiper/css";
 export default {
   name: "QRGenerator",
   data() {
