@@ -273,7 +273,7 @@
                 :placeholder="value.tip"
                 v-model="value.data"
                 :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`].focus()"
+                @click="$refs[`ref${key}Data`][0].focus()"
                 @input="OnUIInput(value)"
                 v-if="value.ui == 'text'"
               ></textarea>
@@ -283,7 +283,7 @@
                 :placeholder="value.tip"
                 v-model="value.data"
                 :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`].focus()"
+                @click="$refs[`ref${key}Data`][0].focus()"
                 @input="OnUIInput(value)"
                 v-else-if="value.ui == 'string'"
               />
@@ -293,7 +293,7 @@
                 :placeholder="value.tip"
                 v-model="value.data"
                 :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`].focus()"
+                @click="$refs[`ref${key}Data`][0].focus()"
                 @input="OnUIInput(value)"
                 v-else-if="value.ui == 'number'"
               />
@@ -301,15 +301,15 @@
             <div class="settings">
               <div class="ui-input">
                 <div class="label">Width:</div>
-                <input class="input" type="text" placeholder="QRCode's width." v-model="settings.width" :ref="`ref${key}Width`" @click="$refs[`ref${key}Width`].focus()" />
+                <input class="input" type="text" placeholder="QRCode's width." v-model="settings.width" :ref="`ref${key}Width`" @click="$refs[`ref${key}Width`][0].focus()" />
               </div>
               <div class="ui-input">
                 <div class="label">Height:</div>
-                <input class="input" type="text" placeholder="QRCode's height." v-model="settings.height" :ref="`ref${key}Height`" @click="$refs[`ref${key}Height`].focus()" />
+                <input class="input" type="text" placeholder="QRCode's height." v-model="settings.height" :ref="`ref${key}Height`" @click="$refs[`ref${key}Height`][0].focus()" />
               </div>
               <div class="ui-input">
                 <div class="label">Margin:</div>
-                <input class="input" type="text" placeholder="QRCode's margin." v-model="settings.margin" :ref="`ref${key}Margin`" @click="$refs[`ref${key}Margin`].focus()" />
+                <input class="input" type="text" placeholder="QRCode's margin." v-model="settings.margin" :ref="`ref${key}Margin`" @click="$refs[`ref${key}Margin`][0].focus()" />
               </div>
               <div class="ui-input">
                 <div class="label">Error Correction:</div>
@@ -319,12 +319,12 @@
                   placeholder="QRCode's error correction level."
                   v-model="settings.errorlevel"
                   :ref="`ref${key}Errorlevel`"
-                  @click="$refs[`ref${key}Errorlevel`].focus()"
+                  @click="$refs[`ref${key}Errorlevel`][0].focus()"
                 />
               </div>
               <div class="ui-input">
                 <div class="label">File Name:</div>
-                <input class="input" type="text" placeholder="Saving file name." v-model="settings.filename" :ref="`ref${key}FileName`" @click="$refs[`ref${key}FileName`].focus()" />
+                <input class="input" type="text" placeholder="Saving file name." v-model="settings.filename" :ref="`ref${key}FileName`" @click="$refs[`ref${key}FileName`][0].focus()" />
               </div>
             </div>
             <div class="outputs">

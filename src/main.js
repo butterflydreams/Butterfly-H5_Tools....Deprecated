@@ -9,4 +9,4 @@ import "@configs/rem.js";
 import "@configs/reset.css";
 import "@configs/border.css";
 
-const app = createApp(App).use(Router).use(Library).use(UI).mount("#app");
+createApp(App).use(Router).use(Library).use(UI).mount("#app");
