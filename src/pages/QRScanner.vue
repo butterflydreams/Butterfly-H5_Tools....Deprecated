@@ -87,7 +87,7 @@
         position: relative;
         margin: 0 auto;
         width: 100%;
-        .pnl-uploadeds {
+        .ui-uploadeds {
           position: relative;
           margin: 0 auto;
           width: 100%;
@@ -128,7 +128,7 @@
             }
           }
         }
-        .pnl-uploadings {
+        .ui-uploadings {
           position: relative;
           margin: 0.46rem auto;
           width: 3.6rem;
@@ -227,7 +227,7 @@
             }
           }
         }
-        .pnl-uploads {
+        .ui-uploads {
           position: relative;
           margin: 0.5rem auto 0.65rem auto;
           width: 3.6rem;
@@ -292,7 +292,7 @@
           <div class="action" style="background-color: #00a584"></div>
         </a>
         <div class="panels">
-          <div class="pnl-uploadeds" :style="`background-color: ${stage == 2 ? '#0fbc00' : '#ff2028'}`" v-if="stage >= 2">
+          <div class="ui-uploadeds" :style="`background-color: ${stage == 2 ? '#0fbc00' : '#ff2028'}`" v-if="stage >= 2">
             <div class="uploaded">
               <div class="marks" :style="`left: ${stage == 2 ? '0.2rem' : '0'}`">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 170 156" v-if="stage == 2">
@@ -329,7 +329,7 @@
               <div class="txt-messages">{{ message }}</div>
             </div>
           </div>
-          <div class="pnl-uploadings" v-else-if="stage == 1">
+          <div class="ui-uploadings" v-else-if="stage == 1">
             <div class="preview">
               <img class="img-preview" ref="refPreview" />
               <a class="btn-delete" href="javascript:;" @click="OnDeleteClick()">
@@ -354,7 +354,7 @@
               <div class="pb-bar2" :style="`width: ${progress * 50}%`"></div>
             </div>
           </div>
-          <div class="pnl-uploads" v-else>
+          <div class="ui-uploads" v-else>
             <input class="control" type="file" accept="image/*" @change="OnUploadClick" />
             <div class="icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

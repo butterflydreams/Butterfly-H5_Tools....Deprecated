@@ -198,7 +198,7 @@ export default {
                 name: "LANDrop",
                 query: {
                   uid: (function () {
-                    return Math.round(Math.random() * 100000000);
+                    return Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
                   })()
                 }
               }
