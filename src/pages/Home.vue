@@ -12,99 +12,90 @@
   background-image: url("~@/assets/common/img_wallpaper.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  .pages {
+  .list-pages {
     position: relative;
     margin: 0 auto;
     width: 100%;
-    .list-pages {
+    .item-page {
       position: relative;
       margin: 0 auto;
       width: 100%;
-      .item-page {
+      height: calc(~"100vh - 0.3rem  - 0.16rem - 1.88rem - 0.58rem");
+      .list-apps {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
         position: relative;
         margin: 0 auto;
+        padding: 0 0.27rem;
         width: 100%;
-        height: calc(~"100vh - 0.3rem  - 0.16rem - 1.88rem - 0.58rem");
-        .list-apps {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          flex-wrap: wrap;
-          position: relative;
-          margin: 0 auto;
-          padding: 0 0.27rem;
-          width: 100%;
-          .item-app {
-            display: block;
-            position: relative;
-            margin: 0;
-            width: 1.74rem;
-            height: 1.76rem;
-            .img-icon {
-              display: block;
-              position: relative;
-              margin: 0 auto;
-              width: 1.2rem;
-              height: 1.2rem;
-              border-radius: 0.3rem;
-            }
-            .txt-name {
-              overflow: hidden;
-              white-space: nowrap;
-              position: relative;
-              margin: 0 auto;
-              width: 100%;
-              height: 0.5rem;
-              line-height: 0.5rem;
-              letter-spacing: 0;
-              font-size: 0.26rem;
-              font-weight: 500;
-              text-align: center;
-              text-overflow: ellipsis;
-              color: #ffffff;
-            }
-          }
-        }
-      }
-      .paginations {
-        position: relative;
-        margin: 0 auto;
-        bottom: 0;
-        left: auto;
-        right: auto;
-        width: fit-content;
-        height: 0.58rem;
-        :deep(.swiper-pagination-bullet) {
+        .item-app {
+          display: block;
           position: relative;
           margin: 0;
-          width: 0.32rem;
-          height: 100%;
-          background-color: transparent;
-          opacity: 0.4;
-          cursor: auto;
-          &.swiper-pagination-bullet-active {
-            opacity: 1;
-            outline: none;
+          width: 1.74rem;
+          height: 1.76rem;
+          .ico-image {
+            display: block;
+            position: relative;
+            margin: 0 auto;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 0.3rem;
           }
-          .pagination {
-            display: inline-block;
-            position: absolute;
-            margin: auto;
-            top: 0.08rem;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            width: 0.16rem;
-            height: 0.16rem;
-            border-radius: 50%;
-            background-color: #ffffff;
+          .txt-name {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            height: 0.5rem;
+            line-height: 0.5rem;
+            letter-spacing: 0;
+            font-size: 0.26rem;
+            font-weight: 500;
+            text-align: center;
+            text-overflow: ellipsis;
+            color: #ffffff;
           }
         }
       }
     }
   }
-  .docks {
+  .list-paginations {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 0.58rem;
+    .item-pagination {
+      position: relative;
+      margin: 0;
+      width: 0.32rem;
+      height: 0.58rem;
+      .button {
+        position: relative;
+        margin: 0.08rem auto 0 auto;
+        width: 0.16rem;
+        height: 0.16rem;
+        border-radius: 50%;
+        &.normal {
+          background-color: rgba(255, 255, 255, 0.4);
+        }
+        &.active {
+          background-color: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+  }
+  .list-docks {
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     margin: 0 auto;
     width: 7.1rem;
@@ -112,29 +103,19 @@
     border-radius: 0.48rem;
     background-color: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(0.22rem);
-    .list-apps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+    .item-dock {
+      display: block;
       position: relative;
-      margin: 0 auto;
-      width: 100%;
-      height: 100%;
-      .item-app {
+      margin: 0;
+      width: 1.74rem;
+      height: 1.2rem;
+      .ico-app {
         display: block;
         position: relative;
-        margin: 0;
-        width: 1.74rem;
+        margin: 0 auto;
+        width: 1.2rem;
         height: 1.2rem;
-        .img-icon {
-          display: block;
-          position: relative;
-          margin: 0 auto;
-          width: 1.2rem;
-          height: 1.2rem;
-          border-radius: 0.3rem;
-        }
+        border-radius: 0.3rem;
       }
     }
   }
@@ -143,39 +124,42 @@
 
 <template>
   <section class="home">
-    <div class="pages">
-      <div class="swiper list-pages pswiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide item-page" v-for="(pitem, pindex) in pageList" :key="pindex">
+    <div class="list-pages">
+      <swipers @swiper="Swiper" @slideChange="OnPageSlide">
+        <slide v-for="(pitem, pindex) in pageList" :key="pindex">
+          <div class="item-page">
             <div class="list-apps">
               <a class="item-app" href="javascript:;" @click="OnAppClick(aitem.route)" v-for="(aitem, aindex) in pitem.appList" :key="aindex">
-                <img class="img-icon" :src="require(`@assets/apps/${aitem.icon}.png`)" />
+                <img class="ico-image" :src="require(`@assets/apps/${aitem.icon}.png`)" />
                 <div class="txt-name">{{ aitem.name }}</div>
               </a>
             </div>
           </div>
-        </div>
-        <div class="paginations"></div>
-      </div>
+        </slide>
+      </swipers>
     </div>
-    <div class="docks">
-      <div class="list-apps">
-        <a class="item-app" href="javascript:;" @click="OnAppClick()" v-for="index in 4" :key="index">
-          <img class="img-icon" :src="require('@assets/apps/ico_system.png')" />
-        </a>
-      </div>
+    <div class="list-paginations">
+      <a class="item-pagination" href="javascript:;" @click="OnPaginationClick(index)" v-for="(item, index) in pageList" :key="index">
+        <div :class="`button ${pageIndex == index ? 'active' : 'normal'}`"></div>
+      </a>
+    </div>
+    <div class="list-docks">
+      <a class="item-dock" href="javascript:;" @click="OnAppClick()" v-for="index in 4" :key="index">
+        <img class="ico-app" :src="require('@assets/apps/ico_system.png')" />
+      </a>
     </div>
   </section>
 </template>
 
 <script>
-import Swiper from "swiper";
-import "swiper/css";
+import { ref as Ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/less";
 export default {
   name: "Home",
   data() {
     return {
-      swiper: null,
+      pageIndex: 0,
       pageList: [
         {
           appList: [
@@ -223,36 +207,33 @@ export default {
             }
           ]
         },
+        {},
+        {},
         {}
       ]
+    };
+  },
+  setup() {
+    let swiper = Ref(null);
+    let Swiper = (sw) => {
+      swiper.value = sw;
+    };
+    return {
+      swiper,
+      Swiper
     };
   },
   created() {
     document.title = "Compilation Tools";
   },
-  mounted() {
-    if (this.swiper == null) {
-      this.$nextTick(() => {
-        this.swiper = new Swiper(".pswiper", {
-          pagination: {
-            el: ".paginations",
-            clickable: true,
-            renderBullet: function () {
-              //! To increase the paginations click area.
-              return `<span class="dot swiper-pagination-bullet"><span class='pagination'></span></span>`;
-            }
-          }
-        });
-      });
-    }
-  },
-  beforeUnmount() {
-    if (this.swiper != null) {
-      this.swiper.destroy(true, true);
-      this.swiper = null;
-    }
+  components: {
+    swipers: Swiper,
+    slide: SwiperSlide
   },
   methods: {
+    OnPageSlide(swiper) {
+      this.pageIndex = swiper.realIndex;
+    },
     OnAppClick(route) {
       if (route.name == "Test") {
         this.$alert.present({
@@ -289,6 +270,10 @@ export default {
       } else {
         this.$router.push(route);
       }
+    },
+    OnPaginationClick(id) {
+      this.pageIndex = id;
+      this.swiper.slideTo(this.pageIndex, 500, false);
     }
   }
 };

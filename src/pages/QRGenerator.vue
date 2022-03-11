@@ -9,113 +9,147 @@
   height: 100%;
   min-height: 100vh;
   background-color: #cccccc;
-  .tabs {
-    overflow: hidden;
+  .list-tabs {
     position: relative;
     margin: 0 auto;
+    padding-top: 0.2rem;
     width: 100%;
-    .list-tabs {
+    background-color: #e6e6e6;
+    :deep(.swiper-slide-active .item-tab) {
+      background-color: #ffffff;
+      transform: scale(1);
+      .txt-name {
+        font-size: 0.26rem;
+        color: #000000;
+      }
+      .ico-pagination {
+        background-color: #000000;
+      }
+    }
+    .item-tab {
+      overflow: hidden;
       position: relative;
       margin: 0 auto;
-      padding-top: 0.2rem;
       width: 100%;
-      background-color: #e6e6e6;
-      .item-tab {
-        overflow: hidden;
+      border-radius: 0.2rem 0.2rem 0 0;
+      background-color: transparent;
+      transform: scale(0.75);
+      .txt-name {
         position: relative;
-        margin: 0 auto;
+        margin: 0.24rem auto 0.12rem auto;
         width: 100%;
-        border-radius: 0.2rem 0.2rem 0 0;
-        background-color: transparent;
-        transform: scale(0.75);
-        &.swiper-slide-active {
-          background-color: #ffffff;
-          transform: scale(1);
-          .txt-name {
-            font-size: 0.26rem;
-            color: #000000;
-          }
-          .ico-pagination {
-            background-color: #000000;
-          }
-        }
-        .txt-name {
-          position: relative;
-          margin: 0.24rem auto 0.12rem auto;
-          width: 100%;
-          line-height: 0.28rem;
-          letter-spacing: 0;
-          font-size: 0.22rem;
-          font-weight: 600;
-          text-align: center;
-          color: #666666;
-        }
-        .ico-pagination {
-          position: relative;
-          margin: 0.12rem auto;
-          width: 1rem;
-          height: 0.08rem;
-          border-radius: 0.2rem;
-          background-color: #666666;
-        }
+        line-height: 0.28rem;
+        letter-spacing: 0;
+        font-size: 0.22rem;
+        font-weight: 600;
+        text-align: center;
+        color: #666666;
+      }
+      .ico-pagination {
+        position: relative;
+        margin: 0.12rem auto;
+        width: 1rem;
+        height: 0.08rem;
+        border-radius: 0.2rem;
+        background-color: #666666;
       }
     }
   }
-  .pages {
+  .list-pages {
     position: relative;
     margin: 0 auto;
     width: 100%;
-    .list-pages {
+    :deep(.swiper-slide-active .item-page) {
+      background-color: #ffffff;
+      transform: scale(1);
+    }
+    .item-page {
+      overflow: hidden;
       position: relative;
       margin: 0 auto;
+      padding: 0 0.5rem;
       width: 100%;
-      .item-page {
-        overflow: hidden;
+      background-color: #e6e6e6;
+      transform: scale(0.9);
+      .inputs {
         position: relative;
-        margin: 0 auto;
-        padding: 0 0.5rem;
+        margin: 0.2rem auto;
         width: 100%;
-        background-color: #e6e6e6;
-        transform: scale(0.9);
-        &.swiper-slide-active {
-          background-color: #ffffff;
-          transform: scale(1);
-        }
-        .inputs {
+        .ui-textarea {
           position: relative;
-          margin: 0.2rem auto;
+          margin: 0 auto;
           width: 100%;
-          .ui-textarea {
+          height: 1.2rem;
+          border: solid 0.01rem #666666;
+          border-radius: 0;
+          background-color: #e6e6e6;
+          line-height: 0.4rem;
+          letter-spacing: 0;
+          font-size: 0.28rem;
+          font-weight: 400;
+          text-align: left;
+          color: #000000;
+          resize: vertical;
+          &::-webkit-input-placeholder {
+            color: #999999;
+          }
+        }
+        .ui-input {
+          display: block;
+          position: relative;
+          margin: 0 auto;
+          width: 100%;
+          height: 0.6rem;
+          border: solid 0.01rem #666666;
+          border-radius: 0;
+          background-color: #e6e6e6;
+          line-height: normal;
+          letter-spacing: 0;
+          font-size: 0.28rem;
+          font-weight: 400;
+          text-align: left;
+          color: #000000;
+          &::-webkit-input-placeholder {
+            color: #999999;
+          }
+        }
+      }
+      .settings {
+        position: relative;
+        margin: 0.4rem auto;
+        width: 100%;
+        .ui-input {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          margin: 0.1rem auto;
+          width: 100%;
+          .label {
+            flex-shrink: 0;
             position: relative;
             margin: 0 auto;
-            width: 100%;
-            height: 1.2rem;
-            border: solid 0.01rem #666666;
-            border-radius: 0;
-            background-color: #e6e6e6;
-            line-height: 0.4rem;
+            width: 1.8rem;
+            line-height: 0.32rem;
             letter-spacing: 0;
-            font-size: 0.28rem;
+            font-size: 0.22rem;
             font-weight: 400;
             text-align: left;
             color: #000000;
-            resize: vertical;
-            &::-webkit-input-placeholder {
-              color: #999999;
-            }
           }
-          .ui-input {
+          .input {
+            flex-grow: 1;
             display: block;
             position: relative;
             margin: 0 auto;
-            width: 100%;
-            height: 0.6rem;
+            width: auto;
+            height: 0.4rem;
             border: solid 0.01rem #666666;
             border-radius: 0;
             background-color: #e6e6e6;
             line-height: normal;
             letter-spacing: 0;
-            font-size: 0.28rem;
+            font-size: 0.22rem;
             font-weight: 400;
             text-align: left;
             color: #000000;
@@ -124,125 +158,80 @@
             }
           }
         }
-        .settings {
+      }
+      .outputs {
+        position: relative;
+        margin: 0.2rem auto;
+        width: 100%;
+        .ico-frame {
           position: relative;
-          margin: 0.4rem auto;
+          margin: 0 auto;
           width: 100%;
-          .ui-input {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin: 0.1rem auto;
-            width: 100%;
-            .label {
-              flex-shrink: 0;
-              position: relative;
-              margin: 0 auto;
-              width: 1.8rem;
-              line-height: 0.32rem;
-              letter-spacing: 0;
-              font-size: 0.22rem;
-              font-weight: 400;
-              text-align: left;
-              color: #000000;
-            }
-            .input {
-              flex-grow: 1;
-              display: block;
-              position: relative;
-              margin: 0 auto;
-              width: auto;
-              height: 0.4rem;
-              border: solid 0.01rem #666666;
-              border-radius: 0;
-              background-color: #e6e6e6;
-              line-height: normal;
-              letter-spacing: 0;
-              font-size: 0.22rem;
-              font-weight: 400;
-              text-align: left;
-              color: #000000;
-              &::-webkit-input-placeholder {
-                color: #999999;
-              }
-            }
-          }
+          z-index: 20;
         }
-        .outputs {
-          position: relative;
-          margin: 0.2rem auto;
+        .ui-qrcode {
+          position: absolute;
+          margin: auto;
+          top: 0;
           width: 100%;
-          .ico-frame {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            z-index: 20;
-          }
-          .ui-qrcode {
-            position: absolute;
-            margin: auto;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            .ico-qrcode {
-              display: block;
-              position: absolute;
-              margin: auto;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              width: 80%;
-              height: 80%;
-            }
-          }
-          .ui-null {
-            position: absolute;
-            margin: auto;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            .nullcode {
-              position: absolute;
-              margin: auto;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              width: 75%;
-              height: 75%;
-            }
-            .magicwand {
-              position: absolute;
-              margin: 0;
-              bottom: 0.45rem;
-              right: 0.45rem;
-              width: 35%;
-              height: 35%;
-            }
-          }
-        }
-        .downloads {
-          position: relative;
-          margin: 0.4rem auto;
-          width: 100%;
-          .btn-download {
+          height: 100%;
+          z-index: 10;
+          .ico-qrcode {
             display: block;
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            height: 0.8rem;
-            background-color: #cccccc;
-            line-height: 0.8rem;
-            letter-spacing: 0;
-            font-size: 0.3rem;
-            font-weight: 600;
-            text-align: center;
-            color: #000000;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 80%;
+            height: 80%;
           }
+        }
+        .ui-null {
+          position: absolute;
+          margin: auto;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+          .nullcode {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 75%;
+            height: 75%;
+          }
+          .magicwand {
+            position: absolute;
+            margin: 0;
+            bottom: 0.45rem;
+            right: 0.45rem;
+            width: 35%;
+            height: 35%;
+          }
+        }
+      }
+      .downloads {
+        position: relative;
+        margin: 0.4rem auto;
+        width: 100%;
+        .btn-download {
+          display: block;
+          position: relative;
+          margin: 0 auto;
+          width: 100%;
+          height: 0.8rem;
+          background-color: #cccccc;
+          line-height: 0.8rem;
+          letter-spacing: 0;
+          font-size: 0.3rem;
+          font-weight: 600;
+          text-align: center;
+          color: #000000;
         }
       }
     }
@@ -252,20 +241,40 @@
 
 <template>
   <section class="qrgenerator">
-    <div class="tabs">
-      <div class="swiper list-tabs tswiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide item-tab" v-for="(value, key, index) in types" :key="index">
+    <div class="list-tabs">
+      <swipers
+        loop
+        :looped-slides="Object.keys(types).length"
+        slides-per-view="4"
+        slide-to-clicked-slide
+        centered-slides
+        grab-cursor
+        @swiper="TabsSwiper"
+        @slideChange="OnTabChange"
+        @touchEnd="OnTabChange"
+      >
+        <slide v-for="(value, key, index) in types" :key="index">
+          <div class="item-tab">
             <div class="txt-name">{{ key }}</div>
             <div class="ico-pagination"></div>
           </div>
-        </div>
-      </div>
+        </slide>
+      </swipers>
     </div>
-    <div class="pages">
-      <div class="swiper list-pages pswiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide item-page" v-for="(value, key, index) in types" :key="index">
+    <div class="list-pages">
+      <swipers
+        loop
+        :looped-slides="Object.keys(types).length"
+        slides-per-view="1.2"
+        slide-to-clicked-slide
+        centered-slides
+        grab-cursor
+        @swiper="PagesSwiper"
+        @slideChange="OnPageChange"
+        @touchEnd="OnPageChange"
+      >
+        <slide v-for="(value, key, index) in types" :key="index">
+          <div class="item-page">
             <div class="inputs">
               <textarea
                 class="ui-textarea"
@@ -383,24 +392,23 @@
               <a class="btn-download" href="javascript:;" @click="OnDownloadClick(value)">Download (size:{{ settings.width }}x{{ settings.height }})</a>
             </div>
           </div>
-        </div>
-      </div>
+        </slide>
+      </swipers>
     </div>
   </section>
 </template>
 
 <script>
+import { ref as Ref } from "vue";
 import { File } from "@lib/core/io.js";
 import { EncodeHintType } from "@zxing/library";
 import { BrowserQRCodeSvgWriter } from "@zxing/browser";
-import Swiper from "swiper";
-import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/less";
 export default {
   name: "QRGenerator",
   data() {
     return {
-      tswiper: null,
-      pswiper: null,
       types: {
         URL: {
           ui: "text",
@@ -440,79 +448,49 @@ export default {
       options: new Map()
     };
   },
+  setup() {
+    let tswiper = Ref(null);
+    let TabsSwiper = (tsw) => {
+      tswiper.value = tsw;
+    };
+    let pswiper = Ref(null);
+    let PagesSwiper = (tsw) => {
+      pswiper.value = tsw;
+    };
+    return {
+      tswiper,
+      TabsSwiper,
+      pswiper,
+      PagesSwiper
+    };
+  },
   created() {
     document.title = "QR Code Generator";
 
-    // ErrorCorrectionLevel: com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.
-    // this.options.set(EncodeHintType.ERROR_CORRECTION, this.settings.errorlevel);
+    //* ErrorCorrectionLevel: com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.
+    //* this.options.set(EncodeHintType.ERROR_CORRECTION, this.settings.errorlevel);
     this.options.set(EncodeHintType.MARGIN, this.settings.margin);
   },
   mounted() {
-    let _this = this;
-    if (this.tswiper == null) {
-      this.$nextTick(() => {
-        this.tswiper = new Swiper(".tswiper", {
-          loop: true,
-          loopedSlides: Object.keys(this.types).length,
-          slidesPerView: 4,
-          slideToClickedSlide: true,
-          centeredSlides: true,
-          grabCursor: true,
-          on: {
-            slideChange: function () {
-              if (!!_this.pswiper) {
-                _this.pswiper.slideToLoop(this.realIndex, 1000, false);
-              }
-            },
-            touchEnd: function () {
-              if (!!_this.pswiper) {
-                _this.pswiper.slideToLoop(this.realIndex, 1000, false);
-              }
-            }
-          }
-        });
-      });
-    }
-    if (this.pswiper == null) {
-      this.$nextTick(() => {
-        this.pswiper = new Swiper(".pswiper", {
-          loop: true,
-          loopedSlides: Object.keys(this.types).length,
-          slidesPerView: 1.2,
-          slideToClickedSlide: true,
-          centeredSlides: true,
-          grabCursor: true,
-          on: {
-            slideChange: function () {
-              if (!!_this.tswiper) {
-                _this.tswiper.slideToLoop(this.realIndex, 1000, false);
-              }
-            },
-            touchEnd: function () {
-              if (!!_this.tswiper) {
-                _this.tswiper.slideToLoop(this.realIndex, 1000, false);
-              }
-            }
-          }
-        });
-      });
-    }
-
     if (this.generator == null) {
       this.generator = new BrowserQRCodeSvgWriter();
     }
   },
-  beforeUnmount() {
-    if (this.tswiper != null) {
-      this.tswiper.destroy(true, true);
-      this.tswiper = null;
-    }
-    if (this.pswiper != null) {
-      this.pswiper.destroy(true, true);
-      this.pswiper = null;
-    }
+  components: {
+    swipers: Swiper,
+    slide: SwiperSlide
   },
   methods: {
+    OnTabChange(swiper) {
+      if (!!this.pswiper) {
+        this.pswiper.slideToLoop(swiper.realIndex, 1000, false);
+      }
+    },
+    OnPageChange(swiper) {
+      if (!!this.tswiper) {
+        this.tswiper.slideToLoop(swiper.realIndex, 1000, false);
+      }
+    },
     OnUIInput(control) {
       if (control.ui == "number") {
         control.data = control.data.replace(/[^\d+-]/g, "");
