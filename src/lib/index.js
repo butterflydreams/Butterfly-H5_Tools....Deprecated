@@ -4,9 +4,6 @@ import "@/lib/dev/vconsole.js";
 
 export default {
   install: (Vue) => {
-    Vue.config.globalProperties = {
-      ...Vue.config.globalProperties,
-      ...UA
-    };
+    Vue.config.globalProperties = Object.assign(Vue.config.globalProperties, UA);
   }
 };

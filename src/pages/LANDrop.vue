@@ -20,10 +20,14 @@
 export default {
   name: "LANDrop",
   data() {
-    return {};
+    return {
+      uid: 0
+    };
   },
   created() {
     document.title = "LAN Drop Transfer";
+    this.uid = !!this.$route.query.uid ? parseInt(this.$route.query.uid) : 0;
+    console.log("your uid is: ", this.uid);
   },
   mounted() {},
   beforeUnmount() {},

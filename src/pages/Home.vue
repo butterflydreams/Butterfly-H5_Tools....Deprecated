@@ -195,7 +195,12 @@ export default {
               name: "LAN Drop",
               icon: "ico_landrop",
               route: {
-                name: "LANDrop"
+                name: "LANDrop",
+                query: {
+                  uid: (function () {
+                    return Math.round(Math.random() * 100000000);
+                  })()
+                }
               }
             },
             {
