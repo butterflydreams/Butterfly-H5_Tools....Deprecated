@@ -331,7 +331,7 @@
           </div>
           <div class="ui-uploadings" v-else-if="stage == 1">
             <div class="preview">
-              <img class="img-preview" ref="refPreview" />
+              <img class="img-preview" ref="uiPreview" />
               <a class="btn-delete" href="javascript:;" @click="OnDeleteClick()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -396,6 +396,7 @@ const ETYPE = {
   eCameraScan: 1, //Use camera to scan: default or iOS | iPadOS >= 14.0.
   eServerDecode: 2 //Upload image to sever decode: old device or system, unsupport yet.
 };
+import { ref } from "vue";
 import { Versions } from "@lib/util/compare.js";
 import { Image } from "@lib/util/images.js";
 import { File } from "@lib/core/io.js";
@@ -413,6 +414,12 @@ export default {
       message: "",
       scanner: null,
       result: ""
+    };
+  },
+  setup() {
+    let uiPreview = ref(null);
+    return {
+      uiPreview
     };
   },
   created() {
@@ -512,7 +519,7 @@ export default {
         _this.extension = File.Parse(file.name).ext;
         _this.stage = 1;
         _this.$nextTick(() => {
-          let preview = _this.$refs.refPreview;
+          let preview = _this.uiPreview;
           if (!!preview) {
             preview.src = reader.result;
             preview.onload = function () {

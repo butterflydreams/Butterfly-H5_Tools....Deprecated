@@ -118,7 +118,7 @@
         position: relative;
         margin: 0.4rem auto;
         width: 100%;
-        .ui-input {
+        .setting {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -215,24 +215,19 @@
           }
         }
       }
-      .downloads {
+      .btn-download {
+        display: block;
         position: relative;
         margin: 0.4rem auto;
         width: 100%;
-        .btn-download {
-          display: block;
-          position: relative;
-          margin: 0 auto;
-          width: 100%;
-          height: 0.8rem;
-          background-color: #cccccc;
-          line-height: 0.8rem;
-          letter-spacing: 0;
-          font-size: 0.3rem;
-          font-weight: 600;
-          text-align: center;
-          color: #000000;
-        }
+        height: 0.8rem;
+        background-color: #cccccc;
+        line-height: 0.8rem;
+        letter-spacing: 0;
+        font-size: 0.3rem;
+        font-weight: 600;
+        text-align: center;
+        color: #000000;
       }
     }
   }
@@ -244,16 +239,16 @@
     <div class="list-tabs">
       <swipers
         loop
-        :looped-slides="Object.keys(types).length"
+        :looped-slides="Object.keys(qrcodes).length"
         slides-per-view="4"
         slide-to-clicked-slide
         centered-slides
         grab-cursor
-        @swiper="TabsSwiper"
+        @swiper="OnTabsSwiper"
         @slideChange="OnTabChange"
         @touchEnd="OnTabChange"
       >
-        <slide v-for="(value, key, index) in types" :key="index">
+        <slide v-for="(value, key, index) in qrcodes" :key="index">
           <div class="item-tab">
             <div class="txt-name">{{ key }}</div>
             <div class="ico-pagination"></div>
@@ -264,76 +259,26 @@
     <div class="list-pages">
       <swipers
         loop
-        :looped-slides="Object.keys(types).length"
+        :looped-slides="Object.keys(qrcodes).length"
         slides-per-view="1.2"
         slide-to-clicked-slide
         centered-slides
         grab-cursor
-        @swiper="PagesSwiper"
+        @swiper="OnPagesSwiper"
         @slideChange="OnPageChange"
         @touchEnd="OnPageChange"
       >
-        <slide v-for="(value, key, index) in types" :key="index">
+        <slide v-for="(value, key, index) in qrcodes" :key="index">
           <div class="item-page">
             <div class="inputs">
-              <textarea
-                class="ui-textarea"
-                rows="3"
-                :placeholder="value.tip"
-                v-model="value.data"
-                :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`][0].focus()"
-                @input="OnUIInput(value)"
-                v-if="value.ui == 'text'"
-              ></textarea>
-              <input
-                class="ui-input"
-                type="text"
-                :placeholder="value.tip"
-                v-model="value.data"
-                :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`][0].focus()"
-                @input="OnUIInput(value)"
-                v-else-if="value.ui == 'string'"
-              />
-              <input
-                class="ui-input"
-                type="text"
-                :placeholder="value.tip"
-                v-model="value.data"
-                :ref="`ref${key}Data`"
-                @click="$refs[`ref${key}Data`][0].focus()"
-                @input="OnUIInput(value)"
-                v-else-if="value.ui == 'number'"
-              />
+              <textarea class="ui-textarea" rows="3" :placeholder="value.tip" v-model="value.data" @input="OnInputsInput(value)" v-if="value.ui == 'text'"></textarea>
+              <input class="ui-input" type="text" :placeholder="value.tip" v-model="value.data" @input="OnInputsInput(value)" v-else-if="value.ui == 'string'" />
+              <input class="ui-input" type="text" :placeholder="value.tip" v-model="value.data" @input="OnInputsInput(value)" v-else-if="value.ui == 'number'" />
             </div>
             <div class="settings">
-              <div class="ui-input">
-                <div class="label">Width:</div>
-                <input class="input" type="text" placeholder="QRCode's width." v-model="settings.width" :ref="`ref${key}Width`" @click="$refs[`ref${key}Width`][0].focus()" />
-              </div>
-              <div class="ui-input">
-                <div class="label">Height:</div>
-                <input class="input" type="text" placeholder="QRCode's height." v-model="settings.height" :ref="`ref${key}Height`" @click="$refs[`ref${key}Height`][0].focus()" />
-              </div>
-              <div class="ui-input">
-                <div class="label">Margin:</div>
-                <input class="input" type="text" placeholder="QRCode's margin." v-model="settings.margin" :ref="`ref${key}Margin`" @click="$refs[`ref${key}Margin`][0].focus()" />
-              </div>
-              <div class="ui-input">
-                <div class="label">Error Correction:</div>
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="QRCode's error correction level."
-                  v-model="settings.errorlevel"
-                  :ref="`ref${key}Errorlevel`"
-                  @click="$refs[`ref${key}Errorlevel`][0].focus()"
-                />
-              </div>
-              <div class="ui-input">
-                <div class="label">File Name:</div>
-                <input class="input" type="text" placeholder="Saving file name." v-model="settings.filename" :ref="`ref${key}FileName`" @click="$refs[`ref${key}FileName`][0].focus()" />
+              <div class="setting" v-for="(svalue, skey, sindex) in value.settings" :key="sindex">
+                <div class="label">{{ svalue.label }}:</div>
+                <input class="input" type="text" :placeholder="svalue.tip" v-model="svalue.data" />
               </div>
             </div>
             <div class="outputs">
@@ -388,9 +333,7 @@
                 </div>
               </div>
             </div>
-            <div class="downloads" v-if="!!value.result">
-              <a class="btn-download" href="javascript:;" @click="OnDownloadClick(value)">Download (size:{{ settings.width }}x{{ settings.height }})</a>
-            </div>
+            <a class="btn-download" href="javascript:;" @click="OnDownloadClick(value)" v-if="!!value.result">Download (size:{{ value.settings.width.data }}x{{ value.settings.height.data }})</a>
           </div>
         </slide>
       </swipers>
@@ -399,7 +342,7 @@
 </template>
 
 <script>
-import { ref as Ref } from "vue";
+import { ref } from "vue";
 import { File } from "@lib/core/io.js";
 import { EncodeHintType } from "@zxing/library";
 import { BrowserQRCodeSvgWriter } from "@zxing/browser";
@@ -409,67 +352,183 @@ export default {
   name: "QRGenerator",
   data() {
     return {
-      types: {
+      qrcodes: {
         URL: {
           ui: "text",
           tip: "http(s)://",
           data: "",
+          settings: {
+            width: {
+              ui: "number",
+              label: "Width",
+              tip: "QRCode's width.",
+              data: 500
+            },
+            height: {
+              ui: "number",
+              label: "Height",
+              tip: "QRCode's height.",
+              data: 500
+            },
+            margin: {
+              ui: "number",
+              label: "Margin",
+              tip: "QRCode's margin.",
+              data: 0
+            },
+            errorlevel: {
+              ui: "number",
+              label: "Error Correction",
+              tip: "QRCode's error correction level.",
+              data: 0
+            },
+            filename: {
+              ui: "string",
+              label: "File Name",
+              tip: "The save file name.",
+              data: "MyQRCode.svg"
+            }
+          },
           result: ""
         },
         TEXT: {
           ui: "text",
           tip: "some text...",
           data: "",
+          settings: {
+            width: {
+              ui: "number",
+              label: "Width",
+              tip: "QRCode's width.",
+              data: 500
+            },
+            height: {
+              ui: "number",
+              label: "Height",
+              tip: "QRCode's height.",
+              data: 500
+            },
+            margin: {
+              ui: "number",
+              label: "Margin",
+              tip: "QRCode's margin.",
+              data: 0
+            },
+            errorlevel: {
+              ui: "number",
+              label: "Error Correction",
+              tip: "QRCode's error correction level.",
+              data: 0
+            },
+            filename: {
+              ui: "string",
+              label: "File Name",
+              tip: "The save file name.",
+              data: "MyQRCode.svg"
+            }
+          },
           result: ""
         },
         EMAIL: {
           ui: "string",
           tip: "name@mail.com",
           data: "",
+          settings: {
+            width: {
+              ui: "number",
+              label: "Width",
+              tip: "QRCode's width.",
+              data: 500
+            },
+            height: {
+              ui: "number",
+              label: "Height",
+              tip: "QRCode's height.",
+              data: 500
+            },
+            margin: {
+              ui: "number",
+              label: "Margin",
+              tip: "QRCode's margin.",
+              data: 0
+            },
+            errorlevel: {
+              ui: "number",
+              label: "Error Correction",
+              tip: "QRCode's error correction level.",
+              data: 0
+            },
+            filename: {
+              ui: "string",
+              label: "File Name",
+              tip: "The save file name.",
+              data: "MyQRCode.svg"
+            }
+          },
           result: ""
         },
         PHONE: {
           ui: "number",
           tip: "+86-138-xxxx-xxxx...",
           data: "",
+          settings: {
+            width: {
+              ui: "number",
+              label: "Width",
+              tip: "QRCode's width.",
+              data: 500
+            },
+            height: {
+              ui: "number",
+              label: "Height",
+              tip: "QRCode's height.",
+              data: 500
+            },
+            margin: {
+              ui: "number",
+              label: "Margin",
+              tip: "QRCode's margin.",
+              data: 0
+            },
+            errorlevel: {
+              ui: "number",
+              label: "Error Correction",
+              tip: "QRCode's error correction level.",
+              data: 0
+            },
+            filename: {
+              ui: "string",
+              label: "File Name",
+              tip: "The save file name.",
+              data: "MyQRCode.svg"
+            }
+          },
           result: ""
         },
         WIFI: {},
         CONTACTS: {}
       },
-      generator: null,
-      settings: {
-        width: 500,
-        height: 500,
-        margin: 0,
-        errorlevel: 0,
-        filename: "MyQRCode.svg"
-      },
-      options: new Map()
+      generator: null
     };
   },
   setup() {
-    let tswiper = Ref(null);
-    let TabsSwiper = (tsw) => {
-      tswiper.value = tsw;
+    let uiTabsSwiper = ref(null);
+    let OnTabsSwiper = (swiper) => {
+      uiTabsSwiper.value = swiper;
     };
-    let pswiper = Ref(null);
-    let PagesSwiper = (tsw) => {
-      pswiper.value = tsw;
+    let uiPagesSwiper = ref(null);
+    let OnPagesSwiper = (swiper) => {
+      uiPagesSwiper.value = swiper;
     };
     return {
-      tswiper,
-      TabsSwiper,
-      pswiper,
-      PagesSwiper
+      uiTabsSwiper,
+      OnTabsSwiper,
+      uiPagesSwiper,
+      OnPagesSwiper
     };
   },
   created() {
     document.title = "QR Code Generator";
-
-    //* ErrorCorrectionLevel: com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.
-    //* this.options.set(EncodeHintType.ERROR_CORRECTION, this.settings.errorlevel);
-    this.options.set(EncodeHintType.MARGIN, this.settings.margin);
   },
   mounted() {
     if (this.generator == null) {
@@ -482,30 +541,34 @@ export default {
   },
   methods: {
     OnTabChange(swiper) {
-      if (!!this.pswiper) {
-        this.pswiper.slideToLoop(swiper.realIndex, 1000, false);
+      if (!!this.uiPagesSwiper) {
+        this.uiPagesSwiper.slideToLoop(swiper.realIndex, 1000, false);
       }
     },
     OnPageChange(swiper) {
-      if (!!this.tswiper) {
-        this.tswiper.slideToLoop(swiper.realIndex, 1000, false);
+      if (!!this.uiTabsSwiper) {
+        this.uiTabsSwiper.slideToLoop(swiper.realIndex, 1000, false);
       }
     },
-    OnUIInput(control) {
-      if (control.ui == "number") {
-        control.data = control.data.replace(/[^\d+-]/g, "");
+    OnInputsInput(qrcode) {
+      if (qrcode.ui == "number") {
+        qrcode.data = qrcode.data.replace(/[^\d+-]/g, "");
       }
-      if (!!control.data) {
-        let data = this.generator.write(control.data, this.settings.width, this.settings.height, this.options);
+      if (!!qrcode.data) {
+        let options = new Map();
+        //* ErrorCorrectionLevel: com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.
+        // options.set(EncodeHintType.ERROR_CORRECTION, qrcode.settings.errorlevel.data);
+        options.set(EncodeHintType.MARGIN, qrcode.settings.margin.data);
+        let data = this.generator.write(qrcode.data, qrcode.settings.width.data, qrcode.settings.height.data, options);
         data.setAttribute("width", "100%");
         data.setAttribute("height", "100%");
-        control.result = new XMLSerializer().serializeToString(data);
+        qrcode.result = new XMLSerializer().serializeToString(data);
       } else {
-        control.result = "";
+        qrcode.result = "";
       }
     },
-    OnDownloadClick(control) {
-      File.Save(new Blob([control.result]), this.settings.filename);
+    OnDownloadClick(qrcode) {
+      File.Save(new Blob([qrcode.result]), qrcode.settings.filename.data);
     }
   }
 };

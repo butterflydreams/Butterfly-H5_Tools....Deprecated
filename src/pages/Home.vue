@@ -125,7 +125,7 @@
 <template>
   <section class="home">
     <div class="list-pages">
-      <swipers @swiper="Swiper" @slideChange="OnPageSlide">
+      <swipers @swiper="OnSwiper" @slideChange="OnPageSlide">
         <slide v-for="(pitem, pindex) in pageList" :key="pindex">
           <div class="item-page">
             <div class="list-apps">
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import { ref as Ref } from "vue";
+import { ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/less";
 export default {
@@ -219,13 +219,13 @@ export default {
     };
   },
   setup() {
-    let swiper = Ref(null);
-    let Swiper = (sw) => {
-      swiper.value = sw;
+    let uiSwiper = ref(null);
+    let OnSwiper = (swiper) => {
+      uiSwiper.value = swiper;
     };
     return {
-      swiper,
-      Swiper
+      uiSwiper,
+      OnSwiper
     };
   },
   created() {
@@ -278,7 +278,7 @@ export default {
     },
     OnPaginationClick(id) {
       this.pageIndex = id;
-      this.swiper.slideTo(this.pageIndex, 500, false);
+      this.uiSwiper.slideTo(this.pageIndex, 500, false);
     }
   }
 };
