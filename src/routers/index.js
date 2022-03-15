@@ -30,6 +30,11 @@ const routes = [
     path: "/landrop",
     name: "LANDrop",
     component: () => import("@/pages/LANDrop.vue")
+  },
+  {
+    path: "/imagesmerge",
+    name: "ImagesMerge",
+    component: () => import("@/pages/ImagesMerge.vue")
   }
 ];
 

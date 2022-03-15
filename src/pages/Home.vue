@@ -204,6 +204,13 @@ export default {
               }
             },
             {
+              name: "Images Merge",
+              icon: "ico_imagesmerge",
+              route: {
+                name: "ImagesMerge"
+              }
+            },
+            {
               name: "Test",
               icon: "ico_test",
               route: {
